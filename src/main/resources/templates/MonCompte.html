@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de compte</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap.rtl.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-grid.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-grid.rtl.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-reboot.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-reboot.rtl.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-utilities.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-utilities.rtl.min.css}" />
+</head>
+<body class="bg-success">
+<br>
+<div align="center" class="container-fluid text-center"><h1>Mon Compte</h1><br><br><br>
+<table class="table table-bordered border-1" th:action="@{/users/tabu}">
+  <tr>
+    <th class="thead-dark">Prénom</th>
+    <td th:text="${session.loggedInUser.prenom}"></td>
+    <td>Modifier le prénom</td>
+  </tr>
+  <tr>
+    <th class="thead-dark">Nom</th>
+    <td th:text="${session.loggedInUser.nom}"></td>
+    <td>Modifier le nom</td>
+  </tr>
+  <tr>
+    <th class="thead-dark">E-mail</th>
+    <td th:text="${session.loggedInUser.email}"></td>
+    <td>Modifier l'adresse mail</td>
+  </tr>
+  <tr>
+    <th class="thead-dark">Mot de Passe</th>
+    <td th:text="*{session.loggedInUser.mdP}"></td>
+    <td>Modifier le mot de passe</td>
+  </tr>
+
+</table>
+
+  <br><br>
+
+  <table class="table table-bordered border-1" th:action="@{/users/edit}"> <tr> <td>
+    <a class="h4 m-3, text-bg-success" th:href="@{/users/edit}" >
+  Modifier Vos Informations</a>
+  </td></tr></table>
+
+
+
+</div>
+</body>
+</html>
