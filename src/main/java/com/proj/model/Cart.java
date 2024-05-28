@@ -7,7 +7,7 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCart;
+    private Integer idCart;
 
     @OneToOne
     private User client;
@@ -29,11 +29,11 @@ public class Cart {
         this.produits = produits;
     }
 
-    public Long getIdCart() {
+    public Integer getIdCart() {
         return idCart;
     }
 
-    public void setIdCart(Long idCart) {
+    public void setIdCart(Integer idCart) {
         this.idCart = idCart;
     }
 

@@ -25,7 +25,7 @@ public class UserRepositoryTest {
         user.setMdP("01221");
         user.setNom("ama");
         user.setPrenom("ADL");
-        user.setType(1);
+        ///user.setType(1);
 
         User savedUser = repo.save(user);
         Assertions.assertNotNull(savedUser);
@@ -48,7 +48,7 @@ public class UserRepositoryTest {
         Integer userId = 2;
         Optional<User> optionalUser = repo.findById(userId);
         User user = optionalUser.get();
-        user.setType(1);
+      //  user.setType(1);
         repo.save(user);
 
         User updateUser = repo.findById(userId).get();

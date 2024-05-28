@@ -1,6 +1,7 @@
 package com.proj.model;
 
 
+import com.proj.enumm.City;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -29,8 +30,11 @@ public class Commande {
     @ManyToOne
     private User client;
 
+    private String addressLine;
+    private City city;
+
     @Column
-    private String typePaiment;
+    private String typePaiment; // enum?
 
     @Column
     private Boolean paye;

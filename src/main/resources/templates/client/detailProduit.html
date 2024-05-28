@@ -6,6 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du Produit</title>
     <style>
+        header {
+            background-color: #D20606;
+            color: #fff;
+            padding: 20px;
+        }
+
+        header h1 {
+            display: inline;
+        }
+
+        div ul {
+            list-style: none;
+            display: inline;
+            text-align: center;
+
+
+        }
+
+        div ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        div ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+
+        #currentAccount {
+            text-align: right;
+            display: inline;
+            position: absolute;
+            right: 10%;
+            max-width: 300px;
+            overflow: hidden;
+        }
+
+        #currentAccount img {
+            width: 50px;
+            height: auto;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -61,27 +105,7 @@
             margin: 10px 0;
         }
 
-        .navbar {
-            width: 100%;
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
 
-            display: block;
-        }
-
-        .navbar h1 {
-            text-align: left;
-            display: inline;
-        }
-
-        .navbar ul li {
-            display: inline;
-        }
-
-        .navbar ul {
-            display: inline;
-        }
 
         .modal {
             display: none;
@@ -140,28 +164,28 @@
 
 <body>
 
-    <div class="navbar">
-        <h1>GeekStore</h1>
-
+    <header style="width: max-content;">
+        <a href="indd.html" style="text-decoration: none;">
+            <h1 style="color: white; ">GeekStore</h1>
+        </a>
         <div style="display: inline;" id="contains-ul">
             <ul>
-                <li><a href="#">Accueil</a></li>
+                <li><a href="http://localhost:8080/users/cnx2">Accueil</a></li>
+                <li><a href="#">Contact</a></li>
                 <li><a href="">Mes Commandes</a></li>
             </ul>
         </div>
-
-
-        <div id="currentAccount" style="display: inline;">
+        <div id="currentAccount">
             <ul>
                 <li><img src="" alt="profil">
                     <p th:text="${session.loggedInUser.prenom}"></p>
                 </li>
                 <li><a href="#" onclick="displayCart()">Mon Panier</a></li>
-                <li><a href="">Deconnexion</a></li>
+                <li><a href="#">Deconnexion</a></li>
             </ul>
         </div>
+    </header>
 
-    </div>
 
     <div class="container">
         <div class="left-side">
@@ -176,21 +200,32 @@
 
                 <p th:text="${produit.description}"></p>
 
-                <button>Add in cart</button>
+                <button th:onclick="'addToCart('+${produit.idProduit}+')'">Ajouter au panier</button>
 
             </div>
         </div>
     </div>
 
+    <!-- La fenêtre modale -->
     <div id="myModal" class="modal">
+        <div class="modal-content" id="mc">
+            <div id="modalMenu">
+                <span class="close" id="closeButton" onclick="closeModal()">&times;</span>
+                <p>Contenu du panier :</p>
+            </div>
+            <div id="cartContents">
+                <!-- Contenu de la fenêtre modale -->
 
-        <!-- Contenu de la fenêtre modale -->
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p>Contenu du panier...</p>
-            
-            <!-- Ajoutez ici le contenu de votre panier -->
+                <!-- Ajoutez ici le contenu de votre panier -->
+            </div>
+            <div class="modal-options">
+                <button onclick="emptyCart()">Vider le panier</button>
+                <button>Passer commande</button>
+            </div>
         </div>
+    </div>>
+
+    <script th:src="@{/js/script.js}"></script>
 
     </div>
 </body>

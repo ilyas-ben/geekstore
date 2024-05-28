@@ -18,6 +18,11 @@ public class User {
 
     private String mdP;
 
+    @Column
+    private String streetAdress;
+
+   // private City city;
+
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
 

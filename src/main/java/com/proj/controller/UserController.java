@@ -57,7 +57,7 @@ public class UserController {
         return "LogIn";
     }
 
-    @PostMapping ("/cnx2")
+    @GetMapping("/cnx2")
     public String Log(User user, Model model, HttpSession session1) {
         User retuser = null;
         retuser = service.getUserByEmail(user.getEmail());

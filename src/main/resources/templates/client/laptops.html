@@ -115,8 +115,10 @@
             width: 100%;
         }
 
-        .modal {
 
+
+        .modal {
+            display: none;
             /* Par défaut, la fenêtre modale est cachée */
             position: fixed;
             /* La fenêtre modale reste en place même lorsque vous faites défiler la page */
@@ -161,9 +163,7 @@
         }
     </style>
 
-    <script>
 
-    </script>
 </head>
 
 <body>
@@ -201,24 +201,23 @@
 
     </section>
 
+    <!-- La fenêtre modale -->
     <div id="myModal" class="modal">
-
-        <!-- Contenu de la fenêtre modale -->
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p>Contenu du panier :</p>
-
-            <div th:each="p : ${cart.produits}">
-                <p th:text="${p.nomP}" style="display: inline;">produit1</p> <button>Supprimer</button>
+        <div class="modal-content" id="mc">
+            <div id="modalMenu">
+                <span class="close" id="closeButton" onclick="closeModal()">&times;</span>
+                <p>Contenu du panier :</p>
             </div>
+            <div id="cartContents">
+                <!-- Contenu de la fenêtre modale -->
 
-            <div class="modal-options"><button>Vider le panier</button>
-
+                <!-- Ajoutez ici le contenu de votre panier -->
+            </div>
+            <div class="modal-options">
+                <button onclick="emptyCart()">Vider le panier</button>
                 <button>Passer commande</button>
             </div>
-            <!-- Ajoutez ici le contenu de votre panier -->
         </div>
-
     </div>
 
     <footer>
@@ -226,44 +225,14 @@
     </footer>
 
     <script>
-
-        function addToCart(idProduit) {
-            const url = "http://localhost:8080/produits/addToCart/" + idProduit;
-
-            fetch(url, {
-                method: 'PUT', // Spécifiez la méthode PUT
-                headers: {
-                    'Content-Type': 'application/json' // Spécifiez le type de contenu si nécessaire
-                }
-            })
-                .then(response => {
-                    // Gérer la réponse ici
-                })
-                .catch(error => {
-                    // Gérer les erreurs ici
-                });
-        }
-
-        // Fonction pour ouvrir la fenêtre modale
-        function displayCart() {
-
-            fetch{
-                
-            }
-
-            document.getElementById('myModal').style.display = "block";
-
-            const url = ""
-
-        }
-
-        // Fonction pour fermer la fenêtre modale
         function closeModal() {
-            document.getElementById('myModal').style.display = "none";
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById('mc').innerHTML = "";
         }
-
-
     </script>
+
+    <script th:src="@{/js/script.js}"></script>
+
 </body>
 
 </html>

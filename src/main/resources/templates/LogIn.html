@@ -18,7 +18,7 @@
 <div class="container-fluid text-center"> <br><br><br>
     <div><h2>Connection</h2></div>
 <br> <br>
-    <form th:action="@{/users/cnx2}" method="post" th:object="${user}"
+    <form th:action="@{/users/cnx2}" method="get" th:object="${user}"
           style="max-width: 500px; margin: 0 auto;">
         <div class="border border-dark rounded p-3">
             <p th:text="${error}"></p>

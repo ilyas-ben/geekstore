@@ -141,18 +141,25 @@
             /* Activer le défilement si nécessaire */
             background-color: rgba(0, 0, 0, 0.4);
             /* Arrière-plan semi-transparent */
+
         }
 
         /* Contenu de la fenêtre modale */
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 16% auto;
             /* Centrer verticalement et horizontalement */
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
             /* Adapter la largeur au contenu */
         }
+
+        #cartContents {
+            padding: 5;
+            margin: 2%;
+        }
+
 
         /* Bouton de fermeture */
         .close {
@@ -170,40 +177,13 @@
         }
     </style>
 
-    <script>
-        // Récupérer la référence du lien "Mon Panier"
-
-
-        // Récupérer la référence de la fenêtre modale
-        var modal = document.getElementById('myModal');
-
-        // Récupérer la référence du bouton de fermeture
-        var span = document.getElementsByClassName('close')[0];
-
-        // Lorsque l'utilisateur clique sur le lien "Mon Panier", afficher la fenêtre modale
-        function displayCart() {
-            modal.style.display = 'block';
-        }
-
-        // Lorsque l'utilisateur clique sur le bouton de fermeture, cacher la fenêtre modale
-        span.onclick = function () {
-            modal.style.display = 'none';
-        }
-
-        // Si l'utilisateur clique en dehors de la fenêtre modale, cacher la fenêtre modale
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
 </head>
 
 <body>
     <header>
         <h1>GeekStore</h1>
 
-        <div style="display: inline;" id="contains-ul">
+        <div style=" display: inline;" id="contains-ul">
             <ul>
                 <li><a href="#">Accueeil</a></li>
                 <li><a href="">Mes Commandes</a></li>
@@ -216,7 +196,7 @@
                 <li><img src="" alt="profil">
                     <p th:text="${session.loggedInUser.prenom}"></p>
                 </li>
-                <li><a href="" onclick="displayCart()">Mon Panier</a></li>
+                <li><a href="#" onclick="displayCart()">Mon Panier</a></li>
                 <li><a href="">Deconnexion</a></li>
             </ul>
         </div>
@@ -230,27 +210,39 @@
             <a href="http://localhost:8080/produits/displayProductsByCategory/1"><img src=""
                     alt="laptopimage">Laptops</a>
         </div>
-        <div class="catg" onclick="displayProductByCategory(2)">
-            <img src="" alt="desktp"> <a href="">Desk pc</a>
+        <div class="catg">
+            <img src="" alt="desktp"> <a href="http://localhost:8080/produits/displayProductsByCategory/2">Desk pc</a>
         </div>
-        <div class="catg" onclick="displayProductByCategory(3)">
-            <img src="" alt=""> <a href="">Accessories</a>
+        <div class="catg">
+            <img src="" alt=""> <a href="http://localhost:8080/produits/displayProductsByCategory/3">Accessories</a>
         </div>
 
     </section>
 
     <!-- La fenêtre modale -->
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Récapitulatif du Panier</h2>
-            <p>Contenu du panier...</p>
+        <div class="modal-content" id="mc">
+            <div id="modalMenu">
+                <span class="close" id="closeButton" onclick="closeModal()">&times;</span>
+                <p>Contenu du panier :</p>
+            </div>
+            <div id="cartContents">
+                <!-- Contenu de la fenêtre modale -->
+
+                <!-- Ajoutez ici le contenu de votre panier -->
+            </div>
+            <div class="modal-options">
+                <button onclick="emptyCart()">Vider le panier</button>
+                <button>Passer commande</button>
+            </div>
         </div>
     </div>
 
     <footer>
         <p>&copy; 2024 GeekStore. Tous droits réservés.</p>
     </footer>
+
+    <script th:src="@{/js/script.js}"></script>
 
 </body>
 
