@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produits - Laptops</title>
+    <title>Produits - Desk PC</title>
     <style>
         /* Reset CSS */
         * {
@@ -161,6 +161,59 @@
         .modal-options {
             text-align: right;
         }
+
+        /* Styles CSS précédents */
+
+        /* Style pour la fenêtre modale des commandes */
+        .modalc {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-contentc {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .closec {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
     </style>
 
 
@@ -175,7 +228,7 @@
             <ul>
                 <li><a href="http://localhost:8080/users/cnx2">Accueil</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="">Mes Commandes</a></li>
+                <li><a href="#" onclick="displayCommandes()">Mes Commandes</a></li>
             </ul>
         </div>
         <div id="currentAccount">
@@ -213,17 +266,51 @@
 
                 <!-- Ajoutez ici le contenu de votre panier -->
             </div>
+            <div id="totalprix"><b>Total :</b>MAD
+                <p id="totalprixchiffre" style="display: inline;"></p>
+            </div>
             <div class="modal-options">
                 <button onclick="emptyCart()">Vider le panier</button>
-                <button>Passer commande</button>
+                <button onclick="orderForm()">Passer commande</button>
             </div>
         </div>
     </div>
+
+    <!-- La fenetre modale pour les commandes  -->
+
+    <div id="myModalc" class="modalc">
+        <div class="modal-contentc">
+            <span class="closec" onclick="closeModalc()">&times;</span>
+            <h2>Vos commandes</h2>
+            <table id="commandesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Statut de livraison</th>
+                        <th>Détails</th>
+                    </tr>
+                </thead>
+                <tbody id="commandtbody"></tbody>
+            </table>
+        </div>
+    </div>
+
 
     <footer>
         <p>&copy; 2024 GeekStore. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById('cartContents').innerHTML = "";
+        };
+
+        function closeModalc() {
+            document.getElementById("myModalc").style.display = "none";
+            document.getElementById("commandtbody").innerHTML = "";
+        }
+    </script>
     <script th:src="@{/js/script.js}"></script>
 
 </body>

@@ -175,19 +175,78 @@
             display: block;
         }
 
-        .subButton{
+        .subButton {
             text-align: right;
         }
 
-        #cardform{
+        #cardform {
             display: none;
             width: 60%;
             padding: 5%;
         }
+
+        #totalprix {
+            text-align: center;
+        }
+
+        /* Styles CSS précédents */
+
+        /* Style pour la fenêtre modale des commandes */
+        .modalc {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-contentc {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .closec {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+
     </style>
 </head>
 
-<body>
+<body onload=" displayCartProduct(); fillCommandPrice(); ">
     <header>
         <a href="indd.html" style="text-decoration: none;">
             <h1 style="color: white; ">GeekStore</h1>
@@ -196,7 +255,7 @@
             <ul>
                 <li><a href="http://localhost:8080/users/cnx2">Accueil</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="">Mes Commandes</a></li>
+                <li><a href="#" onclick="displayCommandes()">Mes Commandes</a></li>
             </ul>
         </div>
         <div id="currentAccount">
@@ -204,7 +263,7 @@
                 <li><img src="" alt="profil">
                     <p th:text="${session.loggedInUser.prenom}"></p>
                 </li>
-                <li><a href="#" onclick="displayCart()">Mon Panier</a></li>
+
                 <li><a href="#">Deconnexion</a></li>
             </ul>
         </div>
@@ -212,33 +271,35 @@
 
 
     <div id="container">
-        <h2>Récapitulatif de votre commmande</h2>
+        <h2>Confirmation de votre commmande</h2>
 
-        <ul style="margin: 10%;">
-            <li>Produit 1</li>
-            <li>Produit 2</li>
-            <li>Produit 3</li>
-            <li>Produit 4</li>
-            <li>Produit 5</li>
-            <li>Produit 5</li>
-            <li>Produit 5</li>
-            <li>Produit 5</li>
-            <li>Produit 5</li>
-            <li>Produit 5</li>
+        <div id="cartContents">
 
-        </ul>
+        </div>
 
-        <form action="#" th:action="@{/save}" th:method="post" th:object="${user}">
-            <label for="address"><b>Adresse : </b></label> <input type="text" id="address" name="address"
-                th:field="*{addressLine}" style="width: 100%;">
+        <div id="totalprix">
+            <b>Total TTC : MAD<p id="totalprixchiffre"></p></b>
+
+        </div>
+
+        <form action="#" th:action="@{/commande}" th:method="post" th:object="${commande}" name="commandform">
+            <input type="hidden" name="" th:field="*{client}" value="${session.loggedInUser}">
+            <label for="address"><b>Adresse de livraison : </b></label> <input type="text" id="address" name="address"
+                th:field="*{addressLine}" style="width: 90%;">
 
             <br><br>
-
+            <input type="hidden" name="" id="totalPriceFieldInput" th:field="*{totalPrice}">
             <label for="city"><b>Ville : </b></label>
             <select name="city" id="city" th:field="*{city}">
+                <option value="" disabled selected>Sélectionner une ville</option>
                 <option th:each="city : ${T(com.proj.enumm.City).values()}" th:value="${city}" th:text="${city.name()}">
                 </option>
             </select>
+
+
+            <br><br>
+            <b>Autres indactions ? </b><br><textarea cols="45" rows="5" id=""></textarea>
+            !! le numero de telephone de votre profil sera utilisé pour la livraison !!
             <br><br><br>
             <hr>
             <br><br><br>
@@ -249,47 +310,78 @@
             <br>
             <input type="radio" id="creditcard" name="paymentmethod" value="2" onchange="cardform(this)">
             <label for="creditcard">Carte bancaire</label><br>
-<br><br>
+            <br><br>
 
             <div id="cardform" style=" border: 1px solid black;">
-                <h4>Vos coordoonées bancaires :</h4><br>
-                <label for="card_number">Card Number:</label><br>
-                <input type="text" id="card_number" name="card_number" placeholder="Enter card number" required><br><br>
 
-                <label for="expiry_date">Expiry Date:</label><br>
-                <input type="text" id="expiry_date" name="expiry_date" style="width:28% ;" placeholder="MM/YY" required><br><br>
-
-                <label for="cvv">CVV:</label><br>
-                <input type="text" id="cvv" name="cvv" placeholder="CVV" style="width: 20%;" required><br><br>
-
-                
             </div>
 
-            <div class="subButton"><button>Finaliser la commande</button></div>
+            <input type="hidden" name="infocard" id="">
 
+            <div class="subButton"><button>Finaliser la commande</button></div>
         </form>
 
-
     </div>
+
+    <!-- La fenetre modale pour les commandes  -->
+
+    <div id="myModalc" class="modalc">
+        <div class="modal-contentc">
+            <span class="closec" onclick="closeModalc()">&times;</span>
+            <h2>Vos commandes</h2>
+            <table id="commandesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Statut de livraison</th>
+                        <th>Détails</th>
+                    </tr>
+                </thead>
+                <tbody id="commandtbody"></tbody>
+            </table>
+        </div>
+    </div>
+
 
     <footer>
         <p>&copy; 2024 GeekStore. Tous droits réservés.</p>
     </footer>
 
     <script>
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById('cartContents').innerHTML = "";
+        };
+
+        function closeModalc() {
+            document.getElementById("myModalc").style.display = "none";
+            document.getElementById("commandtbody").innerHTML = "";
+        }
+    </script>
+
+    <script>
         function cardform(radio) {
             document.getElementById("cardform").style.display = "inline";
-
+            var text = "<h4>Vos coordoonées bancaires :</h4><br>  <label for=\"card_number\">Card Number:</label><br> <input type=\"number\" id=\"cardNumber\" name=\"infocard\" placeholder=\"Enter card number required><br><br> <label for=\"expiry_date\">Expiry Date:</label><br> <input type=\"text\" id=\"expiryDate\" name=\"infocard\" style=\"width:28% ;\" placeholder=\"MM/YY\" required><br><br> <label for=\"cvv\">CVV:</label><br>  <input type=\"number \" id=\"cvv\" name=\"infocard\" placeholder=\"CVV\" style=\"width: 20%;\" required><br><br>"
             var cardForm = document.getElementById("cardform");
 
             if (radio.value == "2") {
                 cardForm.style.display = "block";
+                document.getElementById("cardform").innerHTML = text;
             } else {
                 cardForm.style.display = "none";
             }
 
         }
+
+
+
     </script>
+
+
+
+    <script th:src="@{/js/script.js}"></script>
+
 
 </body>
 

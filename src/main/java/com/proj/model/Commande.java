@@ -2,8 +2,11 @@ package com.proj.model;
 
 
 import com.proj.enumm.City;
+import com.proj.enumm.DeliveryStatus;
+import com.proj.enumm.PaymentMethod;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +19,7 @@ public class Commande {
     private Integer idCommande;
 
     @Column
-    private Date date;
+    private LocalDateTime date;
 
     @ManyToMany
     @JoinTable(
@@ -30,26 +33,48 @@ public class Commande {
     @ManyToOne
     private User client;
 
+    @Column
+    private Float totalPrice;
+
+    @Column
     private String addressLine;
+
+    @Enumerated(EnumType.ORDINAL)
     private City city;
 
     @Column
-    private String typePaiment; // enum?
+    @Enumerated(EnumType.ORDINAL)
+    private PaymentMethod typePaiment; // 1 : à la livraison, 2: par carte
+
+    @Column
+    private String infoPaiement;
 
     @Column
     private Boolean paye;
+
+    @Column
+    private DeliveryStatus deliveryStatus;
+
 
 
     public Commande() {
     }
 
-    public Commande(Integer idCommande, Date date, List<Produit> produits, User user, String typePaiment, Boolean paye) {
-        this.idCommande = idCommande;
-        this.date = date;
-        this.produits = produits;
-        this.client = user;
-        this.typePaiment = typePaiment;
-        this.paye = paye;
+    @Override
+    public String toString() {
+        return "Commande{" +
+                "idCommande=" + idCommande +
+                ", date=" + date +
+                ", produits=" + produits +
+                ", client=" + client +
+                ", totalPrice=" + totalPrice +
+                ", addressLine='" + addressLine + '\'' +
+                ", city=" + city +
+                ", typePaiment=" + typePaiment +
+                ", infoPaiement='" + infoPaiement + '\'' +
+                ", paye=" + paye +
+                ", deliveryStatus=" + deliveryStatus +
+                '}';
     }
 
     public Integer getIdCommande() {
@@ -60,11 +85,11 @@ public class Commande {
         this.idCommande = idCommande;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -84,12 +109,44 @@ public class Commande {
         this.client = client;
     }
 
-    public String getTypePaiment() {
+    public Float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getAddressLine() {
+        return addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public PaymentMethod getTypePaiment() {
         return typePaiment;
     }
 
-    public void setTypePaiment(String typePaiment) {
+    public void setTypePaiment(PaymentMethod typePaiment) {
         this.typePaiment = typePaiment;
+    }
+
+    public String getInfoPaiement() {
+        return infoPaiement;
+    }
+
+    public void setInfoPaiement(String infoPaiement) {
+        this.infoPaiement = infoPaiement;
     }
 
     public Boolean getPaye() {
@@ -100,15 +157,25 @@ public class Commande {
         this.paye = paye;
     }
 
-    @Override
-    public String toString() {
-        return "Commande{" +
-                "idCommande=" + idCommande +
-                ", date=" + date +
-                ", produits=" + produits +
-                ", user=" + client +
-                ", typePaiment='" + typePaiment + '\'' +
-                ", paye=" + paye +
-                '}';
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
+
+    public Commande(Integer idCommande, LocalDateTime date, List<Produit> produits, User client, Float totalPrice, String addressLine, City city, PaymentMethod typePaiment, String infoPaiement, Boolean paye, DeliveryStatus deliveryStatus) {
+        this.idCommande = idCommande;
+        this.date = date;
+        this.produits = produits;
+        this.client = client;
+        this.totalPrice = totalPrice;
+        this.addressLine = addressLine;
+        this.city = city;
+        this.typePaiment = typePaiment;
+        this.infoPaiement = infoPaiement;
+        this.paye = paye;
+        this.deliveryStatus = deliveryStatus;
     }
 }

@@ -2,8 +2,8 @@ package com.proj.enumm;
 
 public enum PaymentMethod {
     NULL(0),
-    CREDITCARD(1),
-    ONDELIVERY(2);
+    A_LA_LIVRAISON(1),
+    CARTE_BANCAIRE(2);
 
     int index;
 

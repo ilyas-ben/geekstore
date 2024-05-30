@@ -161,20 +161,128 @@
         }
 
 
-        /* Bouton de fermeture */
+        .modal {
+            display: none;
+            /* Par défaut, la fenêtre modale est cachée */
+            position: fixed;
+            /* La fenêtre modale reste en place même lorsque vous faites défiler la page */
+            z-index: 1;
+            /* Placez la fenêtre modale au-dessus des autres éléments */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Largeur de la fenêtre modale */
+            height: 100%;
+            /* Hauteur de la fenêtre modale */
+            overflow: auto;
+            /* Ajoutez un défilement si nécessaire */
+            background-color: rgb(0, 0, 0);
+            /* Fond noir avec une opacité */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Fond noir avec une opacité */
+            padding-top: 60px;
+            /* Marge en haut de la fenêtre modale */
+        }
+
+        /* Contenu de la fenêtre modale */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+
+        /* Style pour le bouton "Fermer" */
         .close {
-            color: #aaa;
+            color: #aaaaaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+        .modal-options {
+            text-align: right;
+        }
+
+        #totalprix {
+            
+            text-align: right;
+        }
+
+
+        /* Style pour le bouton "Fermer" */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #D20606;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Styles CSS précédents */
+
+        /* Style pour la fenêtre modale des commandes */
+        .modalc {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-contentc {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .closec {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
             cursor: pointer;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+
     </style>
 
 </head>
@@ -186,7 +294,7 @@
         <div style=" display: inline;" id="contains-ul">
             <ul>
                 <li><a href="#">Accueeil</a></li>
-                <li><a href="">Mes Commandes</a></li>
+                <li><a href="#" onclick="displayCommandes()">Mes Commandes</a></li>
             </ul>
         </div>
 
@@ -219,8 +327,8 @@
 
     </section>
 
-    <!-- La fenêtre modale -->
-    <div id="myModal" class="modal">
+    <!-- La fenêtre modale pour le panier -->
+    <div id="myModal" class="modal" >
         <div class="modal-content" id="mc">
             <div id="modalMenu">
                 <span class="close" id="closeButton" onclick="closeModal()">&times;</span>
@@ -228,19 +336,53 @@
             </div>
             <div id="cartContents">
                 <!-- Contenu de la fenêtre modale -->
-
+                
                 <!-- Ajoutez ici le contenu de votre panier -->
+            </div>
+            <div id="totalprix"><b>Total :</b>MAD
+                <p id="totalprixchiffre" style="display: inline;"></p>
             </div>
             <div class="modal-options">
                 <button onclick="emptyCart()">Vider le panier</button>
-                <button>Passer commande</button>
+                <button onclick="orderForm()">Passer commande</button>
             </div>
+        </div>
+    </div>
+
+    <!-- La fenetre modale pour les commandes  -->
+
+    <div id="myModalc" class="modalc">
+        <div class="modal-contentc">
+            <span class="closec" onclick="closeModalc()">&times;</span>
+            <h2>Vos commandes</h2>
+            <table id="commandesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Statut de livraison</th>
+                        <th>Détails</th>
+                    </tr>
+                </thead>
+                <tbody id="commandtbody"></tbody>
+            </table>
         </div>
     </div>
 
     <footer>
         <p>&copy; 2024 GeekStore. Tous droits réservés.</p>
     </footer>
+
+    <script>
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById('cartContents').innerHTML = "";
+        };
+
+        function closeModalc() {
+            document.getElementById("myModalc").style.display = "none";
+            document.getElementById("commandtbody").innerHTML="";
+        }
+    </script>
 
     <script th:src="@{/js/script.js}"></script>
 

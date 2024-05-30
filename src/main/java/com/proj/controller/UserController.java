@@ -67,7 +67,7 @@ public class UserController {
             // ou utiliser Spring Security pour gérer l'authentification de manière plus robuste.
 
             // model.addAttribute("loggedInUser", retuser.getIdUtilisateur());
-            System.out.println(retuser.toString());
+            System.out.println(retuser);
             session1.setAttribute("loggedInUser", retuser);
 
             //33addToSession(retuser, model);

@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails du Produit</title>
+    <title>Details du produti</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #contains-ul {
+            text-align: center;
+            align-items: center;
+
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            position: relative;
+        }
+
         header {
             background-color: #D20606;
             color: #fff;
@@ -34,7 +54,19 @@
             text-decoration: none;
         }
 
+        nav ul {
+            display: inline;
+        }
 
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
 
         #currentAccount {
             text-align: right;
@@ -50,59 +82,14 @@
             height: auto;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-
-        .container {
-            width: 80%;
-            display: flex;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            margin-top: 20px;
-            max-height: 80vh;
-            /* Hauteur maximale de 80% de la hauteur de la vue */
-            overflow-y: auto;
-            /* Activation du défilement vertical si le contenu dépasse la hauteur maximale */
-        }
-
-        .left-side {
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .left-side img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .right-side {
-            flex: 1;
-            padding: 20px;
-        }
-
-        h2 {
+        footer {
+            background-color: #D20606;
+            color: #fff;
             text-align: center;
-        }
-
-        .details {
-            margin-top: 20px;
-        }
-
-        .details p {
-            margin: 10px 0;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
 
@@ -147,24 +134,85 @@
             font-size: 28px;
             font-weight: bold;
         }
+
+        .modal-options {
+            text-align: right;
+        }
+
+        #ptotal {
+            text-align: center;
+        }
+
+        /* Styles CSS précédents */
+
+        /* Style pour la fenêtre modale des commandes */
+        .modalc {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-contentc {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .closec {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        #container {
+            /*  text-align: center; */
+            /* border: 2px solid black ; */
+            margin: 4% 10% 10% 10%;
+            padding: 5%;
+            box-shadow: 5px 10px 20px #888888;
+            margin-bottom: 100px;
+        }
+
+        #container ul li {
+            display: block;
+        }
     </style>
-
-    <script>
-        // Fonction pour ouvrir la fenêtre modale
-        function displayCart() {
-            document.getElementById('myModal').style.display = "block";
-        }
-
-        // Fonction pour fermer la fenêtre modale
-        function closeModal() {
-            document.getElementById('myModal').style.display = "none";
-        }
-    </script>
 </head>
 
 <body>
-
-    <header style="width: max-content;">
+    <header>
         <a href="indd.html" style="text-decoration: none;">
             <h1 style="color: white; ">GeekStore</h1>
         </a>
@@ -172,7 +220,7 @@
             <ul>
                 <li><a href="http://localhost:8080/users/cnx2">Accueil</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="">Mes Commandes</a></li>
+                <li><a href="#" onclick="displayCommandes()">Mes Commandes</a></li>
             </ul>
         </div>
         <div id="currentAccount">
@@ -185,28 +233,29 @@
             </ul>
         </div>
     </header>
-
-
-    <div class="container">
-        <div class="left-side">
-            <img src="#" alt="Image du Produit">
+    <div id="container">
+        <div id="left-side">
+            <img src="data:image/jpeg;base64,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"
+                alt="Image du Produit">
         </div>
-        <div class="right-side">
+        <div id="right-side">
             <h2>Détails du Produit</h2>
             <div class="details">
-                <p><strong>Name of product:</strong> <span th:text="${produit.nomP}"></span></p>
-                <p><strong>Price :</strong> <span th:text="${produit.prix} + USD"></span></p>
-                <p><strong>Description : </strong>
+                <div class="details">
+                    <p><strong>Name of product:</strong> <span th:text="${produit.nomP}"></span></p>
+                    <p><strong>Price :</strong> <span th:text="MAD + ${produit.prix} "></span></p>
+                    <p><strong>Description : </strong>
 
-                <p th:text="${produit.description}"></p>
+                    <p th:text="${produit.description}"></p>
 
-                <button th:onclick="'addToCart('+${produit.idProduit}+')'">Ajouter au panier</button>
+                    <button th:onclick="'addToCart('+${produit.idProduit}+')'">Ajouter au panier</button>
+
+                </div>
 
             </div>
         </div>
     </div>
-
-    <!-- La fenêtre modale -->
+    <!-- La fenêtre modale pour le panier -->
     <div id="myModal" class="modal">
         <div class="modal-content" id="mc">
             <div id="modalMenu">
@@ -218,16 +267,57 @@
 
                 <!-- Ajoutez ici le contenu de votre panier -->
             </div>
+            <div id="totalprix"><b>Total :</b>MAD
+                <p id="totalprixchiffre" style="display: inline;"></p>
+            </div>
             <div class="modal-options">
                 <button onclick="emptyCart()">Vider le panier</button>
-                <button>Passer commande</button>
+                <button onclick="orderForm()">Passer commande</button>
             </div>
         </div>
-    </div>>
+    </div>
+
+    <!-- La fenetre modale pour les commandes  -->
+
+    <div id="myModalc" class="modalc">
+        <div class="modal-contentc">
+            <span class="closec" onclick="closeModalc()">&times;</span>
+            <h2>Vos commandes</h2>
+            <table id="commandesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Statut de livraison</th>
+                        <th>Détails</th>
+                    </tr>
+                </thead>
+                <tbody id="commandtbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>&copy; 2024 GeekStore. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById('cartContents').innerHTML = "";
+        };
+
+        function closeModalc() {
+            document.getElementById("myModalc").style.display = "none";
+            document.getElementById("commandtbody").innerHTML = "";
+        }
+    </script>
 
     <script th:src="@{/js/script.js}"></script>
 
-    </div>
+
+
+
 </body>
 
 </html>
