@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produits - Laptops</title>
+    <title>Détails de votre commande</title>
+
     <style>
         /* Reset CSS */
-        * {
+         /* Reset CSS */
+         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -109,6 +110,19 @@
             width: 100%;
         }
 
+        #container {
+            /*  text-align: center; */
+            /* border: 2px solid black ; */
+            margin: 4% 10% 10% 10%;
+            padding: 5%;
+            box-shadow: 5px 10px 20px #888888;
+            margin-bottom: 100px;
+        }
+
+        #container ul li {
+            display: block;
+        }
+
 
 
         .modal {
@@ -156,9 +170,12 @@
             text-align: right;
         }
 
-        #totalprix {
+        #ptotal {
+            text-align: center;
+        }
 
-            text-align: right;
+        p{
+            padding: 2%;
         }
 
         /* Styles CSS précédents */
@@ -215,9 +232,6 @@
         }
     </style>
 
-
-
-
 </head>
 
 <body>
@@ -243,43 +257,35 @@
         </div>
     </header>
 
-    <section class="products">
+    <div id="container">
+        <h1>Détails de la Commande</h1>
+        <p><strong>ID de la Commande :</strong> <span th:text="${commande.idCommande}"></span></p>
+        <p><strong>Date :</strong> <span th:text="${commande.date}"></span></p>
+        <!-- <p><strong>Total :</strong> <span th:text="${commande.totalPrice}">€</span></p> -->
+        <p><strong>Adresse :</strong> <span th:text="${commande.addressLine}"></span></p>
+        <p><strong>Ville :</strong> <span th:text="${commande.city}"></span></p>
+        <p><strong>Méthode de Paiement :</strong> <span th:text="${commande.typePaiment}"></span></p>
+        <p><strong>Informations de Paiement :</strong> <span th:text="${commande.infoPaiement}"></span></p>
+        <p><strong>Statut de Livraison :</strong> <span th:text="${commande.deliveryStatus}"></span></p><br>
 
-        <div class="product" th:each="produit : ${products}">
-            <img src="" alt="Laptop3">
-            <h3 th:text="${produit.nomP}"> </h3>
-            <p th:text="${produit.prix}+ MAD"></p>
-            <button th:onclick="'addToCart('+${produit.idProduit}+')'">Ajouter au panier</button>
-            <button><a th:href="@{ '/produits/' +${produit.idProduit}}">Détails</a></button>
-        </div>
-
-    </section>
-
-    <!-- La fenêtre modale pour le panier -->
-    <div id="myModal" class="modal">
-        <div class="modal-content" id="mc">
-            <div id="modalMenu">
-                <span class="close" id="closeButton" onclick="closeModal()">&times;</span>
-                <p>Contenu du panier :</p>
-            </div>
-            <div id="cartContents">
-                <!-- Contenu de la fenêtre modale -->
-
-                <!-- Ajoutez ici le contenu de votre panier -->
-            </div>
-            <div id="totalprix"><b>Total :</b>MAD
-                <p id="totalprixchiffre" style="display: inline;"></p>
-            </div>
-            <div class="modal-options">
-                <button onclick="emptyCart()">Vider le panier</button>
-                <button onclick="orderForm()">Passer commande</button>
-            </div>
+        <br><br><br>
+        <h2>Produits : </h2>
+        <ul>
+            <li th:each="produit : ${commande.produits}">
+                <p><strong></strong> <span th:text="${produit.nomP}"></span></p>
+                <p><strong></strong> <span th:text="${produit.prix}"></span>MAD</p>
+                <!-- Ajoutez d'autres détails du produit ici -->
+            </li>
+        </ul>
+        <div id="ptotal">
+            <h3>Total : </h3><b th:text=${commande.totalPrice}>MAD</b>
         </div>
     </div>
 
+
     <!-- La fenetre modale pour les commandes  -->
 
-    <div id="myModalc" class="modalc">
+    <div id="myModalc" class="modalc"  >
         <div class="modal-contentc">
             <span class="closec" onclick="closeModalc()">&times;</span>
             <h2>Vos commandes</h2>
@@ -314,7 +320,6 @@
     </script>
 
     <script th:src="@{/js/script.js}"></script>
-
 </body>
 
 </html>

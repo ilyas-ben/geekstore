@@ -1,6 +1,7 @@
 package com.proj.model;
 
 import com.proj.enumm.UserType;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,17 +13,22 @@ public class User {
     @Column
     private String nom;
 
+    @Column
     private String prenom;
 
+    @Column
     private String email;
 
+    @Column
     private String mdP;
 
     @Column
     private String streetAdress;
 
-   // private City city;
+    @Column
+    private int phone;
 
+    @Column
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
 
@@ -81,6 +87,14 @@ public class User {
         return userType;
     }
 
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
@@ -97,7 +111,9 @@ public class User {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
-                ", MdP='" + mdP + '\'' +
+                ", mdP='" + mdP + '\'' +
+                ", streetAdress='" + streetAdress + '\'' +
+                ", phone=" + phone +
                 ", userType=" + userType +
                 '}';
     }

@@ -1,5 +1,6 @@
 package com.proj;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -7,7 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("")
-    public String showHomePage(){
+    public String showHomePage(HttpSession session){
+        if(session.getAttribute("loggedInUser")!=null){
+            return "client/indd";
+        }
+       else{
+           return "index";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("loggedInUser");
         return "index";
     }
 

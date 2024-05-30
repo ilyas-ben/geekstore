@@ -8,7 +8,8 @@
     <title>Produits - Accesoires</title>
     <style>
         /* Reset CSS */
-        * {
+         /* Reset CSS */
+         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -37,6 +38,9 @@
         header h1 {
             display: inline;
         }
+        header div{
+            display: inline;
+        }
 
         div ul {
             list-style: none;
@@ -48,44 +52,31 @@
 
         div ul li {
             display: inline;
-            margin-right: 20px;
+            
         }
+
 
         div ul li a {
             color: #fff;
             text-decoration: none;
         }
-
-        nav ul {
-            display: inline;
+        li{
+            margin: 5px;
         }
 
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
 
         #currentAccount {
-
+            
             display: inline;
-            position: absolute;
-            right: 10%;
-            max-width: 300px;
+            position: relative;
+            left: 50%;
+            
             overflow: hidden;
         }
 
-        #cuurrentAccount ul li {
-            display: inline;
-        }
-
         #currentAccount img {
-            width: 80px;
-            height: 5px;
+            width: 50px;
+            height: auto;
         }
 
         .products {
@@ -224,23 +215,23 @@
 
 <body>
     <header>
-        <a href="indd.html" style="text-decoration: none;">
+        <div id="menu"><a href="http://localhost:8080/" style="text-decoration: none;">
             <h1 style="color: white; ">GeekStore</h1>
         </a>
         <div style="display: inline;" id="contains-ul">
             <ul>
-                <li><a href="http://localhost:8080/users/cnx2">Accueil</a></li>
+                <li><a href="http://localhost:8080/">Accueil</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="#" onclick="displayCommandes()">Mes Commandes</a></li>
-            </ul>
+            </ul></div>
         </div>
         <div id="currentAccount">
             <ul>
                 <li><img src="" alt="profil">
-                    <p th:text="${session.loggedInUser.prenom}"></p>
                 </li>
+                <li><a href="http://localhost:8080/users/myProfile" th:text="${session.loggedInUser.nom}">Ilyas</a></li>
                 <li><a href="#" onclick="displayCart()">Mon Panier</a></li>
-                <li><a href="#">Deconnexion</a></li>
+                <li><a href="http://localhost:8080/logout">Deconnexion</a></li>
             </ul>
         </div>
     </header>

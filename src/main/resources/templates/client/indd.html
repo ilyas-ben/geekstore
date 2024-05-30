@@ -7,13 +7,20 @@
     <title>Accueil - Mon Site E-commerce</title>
     <style>
         /* Reset CSS */
-        * {
+         /* Reset CSS */
+         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Styles généraux */
+        #contains-ul {
+            text-align: center;
+            align-items: center;
+
+        }
+
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f8f8;
@@ -25,13 +32,13 @@
             background-color: #D20606;
             color: #fff;
             padding: 20px;
-
         }
 
-        #contains-ul {
-            text-align: center;
-            align-items: center;
-
+        header h1 {
+            display: inline;
+        }
+        header div{
+            display: inline;
         }
 
         div ul {
@@ -44,12 +51,31 @@
 
         div ul li {
             display: inline;
-            margin-right: 20px;
+            
         }
+
 
         div ul li a {
             color: #fff;
             text-decoration: none;
+        }
+        li{
+            margin: 5px;
+        }
+
+
+        #currentAccount {
+            
+            display: inline;
+            position: relative;
+            left: 50%;
+            
+            overflow: hidden;
+        }
+
+        #currentAccount img {
+            width: 50px;
+            height: auto;
         }
 
         .banner {
@@ -90,32 +116,7 @@
             width: 100%;
         }
 
-        header h1 {
-            text-align: left;
-            display: inline;
-
-        }
-
-        #currentAccount {
-            text-align: right;
-            display: inline;
-            position: absolute;
-            right: 10%;
-            max-width: 300px;
-            overflow: hidden;
-        }
-
-
-        #currentAccount img {
-            width: 50px;
-            /* Largeur maximale de l'image à l'intérieur du div */
-            height: auto;
-            /* Maintient le ratio hauteur-largeur de l'image */
-        }
-
-        #currentAccount ul li {
-            display: inline;
-        }
+       
 
         .catg img {
             width: 100px;
@@ -289,26 +290,25 @@
 
 <body>
     <header>
-        <h1>GeekStore</h1>
-
-        <div style=" display: inline;" id="contains-ul">
+        <div id="menu"><a href="http://localhost:8080/" style="text-decoration: none;">
+            <h1 style="color: white; ">GeekStore</h1>
+        </a>
+        <div style="display: inline;" id="contains-ul">
             <ul>
-                <li><a href="#">Accueeil</a></li>
+                <li><a href="http://localhost:8080/">Accueil</a></li>
+                <li><a href="#">Contact</a></li>
                 <li><a href="#" onclick="displayCommandes()">Mes Commandes</a></li>
-            </ul>
+            </ul></div>
         </div>
-
-
         <div id="currentAccount">
             <ul>
                 <li><img src="" alt="profil">
-                    <p th:text="${session.loggedInUser.prenom}"></p>
                 </li>
+                <li><a href="http://localhost:8080/users/myProfile" th:text="${session.loggedInUser.nom}">Ilyas</a></li>
                 <li><a href="#" onclick="displayCart()">Mon Panier</a></li>
-                <li><a href="">Deconnexion</a></li>
+                <li><a href="http://localhost:8080/logout">Deconnexion</a></li>
             </ul>
         </div>
-
     </header>
 
 

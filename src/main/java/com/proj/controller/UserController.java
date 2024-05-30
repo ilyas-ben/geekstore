@@ -31,17 +31,15 @@ public class UserController {
         System.out.println(category);
     }
 
-    @GetMapping("/logout")
-    public String logOut(Model model, HttpSession session1){
-        session1.invalidate();
-        return "LogIn";
-    }
+
 
     @GetMapping("/new")
     public String showNewForm(Model model){
         model.addAttribute("user",new User());
         return "SignUp";
     }
+
+
 
     @PostMapping("/save")
     public String saveUser(User user){
@@ -92,7 +90,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/tab")
+    @GetMapping("/myProfile")
     public String showUserDet(Model model){
         User user = (User) model.getAttribute("loggedInUser");
         model.addAttribute("user",new User());
@@ -130,6 +128,8 @@ public class UserController {
         existingUser.setNom(updatedUser.getNom());
         existingUser.setEmail(updatedUser.getEmail());
         existingUser.setMdP(updatedUser.getMdP());
+        existingUser.setPhone(updatedUser.getPhone());
+        existingUser.setUserType(updatedUser.getUserType());
 
         //session1.setAttribute("user", user);
         service.save(existingUser);

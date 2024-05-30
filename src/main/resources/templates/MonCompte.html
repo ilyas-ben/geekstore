@@ -1,54 +1,225 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Gestion de compte</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap.rtl.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-grid.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-grid.rtl.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-reboot.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-reboot.rtl.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-utilities.min.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.2.3-dist/css/bootstrap-utilities.rtl.min.css}" />
+  <meta charset="UTF-8">
+  <title>Gestion de compte</title>
+  <style>
+    <style>
+
+    /* Reset CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Styles généraux */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      position: relative;
+    }
+
+    header {
+      background-color: #D20606;
+      color: #fff;
+      padding: 20px;
+
+    }
+
+    #contains-ul {
+      text-align: center;
+      align-items: center;
+
+    }
+
+    div ul {
+      list-style: none;
+      display: inline;
+      text-align: center;
+
+
+    }
+
+    div ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    div ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .banner {
+      background-image: url('banner.jpg');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      padding: 100px 20px;
+      color: #fff;
+    }
+
+    .banner h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .banner p {
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    .featured-products {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .featured-products h2 {
+      margin-bottom: 20px;
+    }
+
+    footer {
+      background-color: #D20606;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+
+      bottom: 0;
+      width: 100%;
+
+    }
+
+    header h1 {
+      text-align: left;
+      display: inline;
+
+    }
+
+    #currentAccount {
+      text-align: right;
+      display: inline;
+      position: absolute;
+      right: 10%;
+      max-width: 300px;
+      overflow: hidden;
+    }
+
+
+    #currentAccount img {
+      width: 20px;
+      /* Largeur maximale de l'image à l'intérieur du div */
+      border: 1px solid saddlebrown ;
+      height: auto;
+      /* Maintient le ratio hauteur-largeur de l'image */
+    }
+
+    #currentAccount ul li {
+      display: inline;
+    }
+
+    #container {
+      width: 50%;
+      /* ou une largeur fixe selon vos besoins */
+      margin: 0 auto;
+      /* pour centrer horizontalement */
+      text-align: center;
+      /* pour centrer le contenu à l'intérieur */
+      box-shadow: 10px 8px 10px 5px grey;
+      margin-bottom: 20%;
+    }
+
+    table {
+
+      width: 100%;
+    }
+
+    th,
+    td {
+
+      padding: 8px;
+      text-align: left;
+    }
+
+    header,
+    footer {
+      width: 100%;
+      /* Assure que le header et le footer occupent toute la largeur */
+    }
+    
+  </style>
 </head>
-<body class="bg-success">
-<br>
-<div align="center" class="container-fluid text-center"><h1>Mon Compte</h1><br><br><br>
-<table class="table table-bordered border-1" th:action="@{/users/tabu}">
-  <tr>
-    <th class="thead-dark">Prénom</th>
-    <td th:text="${session.loggedInUser.prenom}"></td>
-    <td>Modifier le prénom</td>
-  </tr>
-  <tr>
-    <th class="thead-dark">Nom</th>
-    <td th:text="${session.loggedInUser.nom}"></td>
-    <td>Modifier le nom</td>
-  </tr>
-  <tr>
-    <th class="thead-dark">E-mail</th>
-    <td th:text="${session.loggedInUser.email}"></td>
-    <td>Modifier l'adresse mail</td>
-  </tr>
-  <tr>
-    <th class="thead-dark">Mot de Passe</th>
-    <td th:text="*{session.loggedInUser.mdP}"></td>
-    <td>Modifier le mot de passe</td>
-  </tr>
-
-</table>
-
-  <br><br>
-
-  <table class="table table-bordered border-1" th:action="@{/users/edit}"> <tr> <td>
-    <a class="h4 m-3, text-bg-success" th:href="@{/users/edit}" >
-  Modifier Vos Informations</a>
-  </td></tr></table>
 
 
 
-</div>
+<body>
+
+  <header>
+    <a href="http://localhost:8080/" style="text-decoration: none;">
+      <h1 style="color: white; ">GeekStore</h1>
+    </a>
+    <div style="display: inline;" id="contains-ul">
+      <ul>
+        <li><a href="http://localhost:8080/">Accueil</a></li>
+      </ul>
+    </div>
+    <div id="currentAccount">
+      <ul>
+        <li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAACUCAMAAADMOLmaAAAAZlBMVEX///8AAADy8vLe3t719fX6+vrU1NRBQUHa2trR0dF4eHjp6elycnKUlJTj4+NtbW24uLienp4WFhaBgYGysrImJiYwMDAMDAylpaXLy8sfHx+IiIjFxcVISEhTU1NdXV1lZWU6OjrhL0aYAAAEDElEQVR4nO2cWZaqMBBADRAGUQZF1FZB9r/JJ4/2aCuEpIqq8MFdwT1CJTXharWwsMCHjP1iX4mOal/4sbSt9If4tA7EX4L1Kbat9USG9UH0cajDWfyQ17pXr6O+2tZbJRuFX8smsern5SN+LblnTzC5awgKcbf2M0allqAQZWRHsNhpCgqxK2wIXrX9WizEdGYkKETGLej3H9LDHHxeQU83SF6UrIeOTI0FhUg5r0DTl7CD8VX0QIJC8D3nPdBwzyVoHMdPuOJZQn/Cx4/IEyzxEWx45Em7t2BBIbYshuaH9YuSQ9BHCArBESuYh8zymOVYYaJmQx/NyWdhbEZAXxFEKEEh6AsCWNLwgj59OCENT+SGuFDmCGb4pdxBn9/gDpvHcUNuCMn/30nJDddIwzW54QVpeCE3nP9pUyAN6Ts4Z6ThmdzQxSSwjxTWJTd0VG3rcWqH3BAZzPShjE1uODojUr/1+s2OpWDG3Cr0N0oLJsvmabl7ejOKPrhaiPBYYesgVuMuvVRcgqsQaBiyGQLDmSeQO+IbQPDGOhGHnDjMwz3zRJY+df3AtG7m6W2+Y9gDY+h5fWMS0Jxh/ELqrBD8PmJbOyO615+V+XeHq5NE3OlLEwXO+JPOGSoTteNaNUM7rG37tfjbnwG/3ZZ5MD9InPW135tsNqtpLU52SW9lN/E7lrf0ks3h8X4g4zC6tkThzJYPFxYWdJCOEyeJ+0mSxLFjcTmywwmzfLuugoFN3aZKL3kWWTsZ/bwOdBqyh6De8q9IJplpyZwWLuMxnm0gY/AyLVgcZXyB79uIfUIued4j/Fo2tPumyX0oFdRnV9MljSF2cvskpXGUOW7W887PluCMPDeT+bUcpn4dHex6wzeXSWsEF7cG1E8zYUsWO1MeIp/qcMSuhwwzTcMpxg1D1VQTrIG5kJa1PgG6qUMs+FBExssZutiszw61V5BMd40Mc0A86JDiGPymAV/TDvU7+CSAXi/YFS997rCjm+6g/gZ0dGOXk8wATKxcVkHAKrkDnXJDMZ6cTp8PjmG4K4TduoZgdLd43M+45WZSu+hP7KbEYMCb0OcLffzoX9DYbVwo2nvG0GUVPLq5oq2fUHudPML3ZqBoZrPYjWsMWhkE9KPQadA5E/nvu3c07j7Jk/kP0YzPNzJkjxXL+IoiZ2bdx+jHr7HdhyxEOZYnYtf+8Yy1Pu3dJ0/GLmfbfg/Ugtz1Ux/q9IGq22qCujC1/xqOJDgeZb9VF+UnLGFjW+9BqXoRz5gvO6biqDoRsZ/+ToPqarZThX6SKwznEMrKRFvCvzyZEkW/Uza25f7TDBt6lrPXX47DebbdIurFYohnMcSjqEhtF3odqgTRmYPiyD86OvZR+i0sLCxQ8Q/qsESghNzFMQAAAABJRU5ErkJggg==" alt="profil">
+          
+            
+          </a>
+        </li>
+        <li><a href="http://localhost:8080/users/myProfile" th:text="${session.loggedInUser.nom}">Ilyas</a></li>
+        <li><a href="http://localhost:8080/logout">Deconnexion</a></li>
+      </ul>
+    </div>
+  </header>
+
+
+  <br>
+  <div id="container">
+    <h1>Mon Compte</h1><br><br><br>
+    <table>
+
+      <img src="" alt="Votre image de profil">
+
+      <tr>
+        <th>Prénom : </th>
+        <td th:text="${session.loggedInUser.prenom}"></td>
+
+      </tr>
+      <tr>
+        <th>Nom</th>
+        <td th:text="${session.loggedInUser.nom}"></td>
+
+      </tr>
+      <tr>
+        <th>E-mail</th>
+        <td th:text="${session.loggedInUser.email}"></td>
+
+      </tr>
+      <tr>
+        <th>Mot de Passe</th>
+        <td th:text="*{session.loggedInUser.mdP}"></td>
+
+      </tr>
+      <tr>
+        <th>Phone : </th>
+        <td th:text="*{session.loggedInUser.phone}"></td>
+      </tr>
+
+
+    </table>
+<button>Modifier vos information</button>
+    <br><br>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 GeekStore. Tous droits réservés.</p>
+  </footer>
 </body>
+
 </html>
